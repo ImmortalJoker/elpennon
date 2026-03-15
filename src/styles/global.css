@@ -1,1 +1,60 @@
 @import "tailwindcss";
+
+@theme {
+  --color-brand-dark: #1a1208;
+  --color-brand-dark-alt: #221a0d;
+  --color-brand-gold: #c9a84c;
+  --color-brand-gold-light: #d4b85e;
+  --color-brand-ivory: #f5f0e8;
+  --color-brand-ivory-muted: #bfb9ad;
+  --color-brand-whatsapp: #25D366;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Noise texture overlay for hero */
+.hero-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Custom checkbox styling */
+.calc-checkbox {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.5px solid #c9a84c;
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.calc-checkbox:checked {
+  background: #c9a84c;
+}
+
+.calc-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 9px;
+  border: solid #1a1208;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.calc-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.3);
+}

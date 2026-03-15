@@ -1,8 +1,10 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer class="bg-amber-950 text-amber-200 py-8 px-4 text-center">
-  <p data-i18n="footer" data-i18n-options={JSON.stringify({ year })}>
+<footer class="bg-brand-dark border-t border-brand-gold/10 py-10 px-4 text-center">
+  <p class="font-heading text-lg text-brand-ivory mb-2">Enmarcaciones El Peñón</p>
+  <p class="text-sm text-brand-ivory-muted mb-3" data-i18n="footer" data-i18n-options={JSON.stringify({ year })}>
     &copy; {year} Enmarcaciones El Peñón, S.L. Todos los derechos reservados.
   </p>
+  <p class="text-xs text-brand-ivory-muted/60">Diseñado con ♥ en Tenerife</p>
 </footer>

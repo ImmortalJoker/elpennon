@@ -19,6 +19,11 @@ const canonicalUrl = 'https://elpennon.com';
     <meta name="keywords" content="marco a medida, marcos aluminio, enmarcaciones Tenerife, marco 40x40, marco 50x50, marco personalizado, Bilderrahmen, custom frames, Puerto de la Cruz" />
     <link rel="canonical" href={canonicalUrl} />
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+
     <!-- hreflang -->
     <link rel="alternate" hreflang="es" href={canonicalUrl} />
     <link rel="alternate" hreflang="de" href={`${canonicalUrl}?lang=de`} />
@@ -40,7 +45,7 @@ const canonicalUrl = 'https://elpennon.com';
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Enmarcaciones El Peñón",
-      "telephone": "+34647082690",
+      "telephone": "+34647020269",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Transversal C/ Mequínez, 138",
@@ -54,7 +59,7 @@ const canonicalUrl = 'https://elpennon.com';
 
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body class="min-h-screen bg-white text-gray-900 font-sans">
+  <body class="min-h-screen bg-brand-dark text-brand-ivory font-body">
     <slot />
 
     <!-- i18n client-side script -->
@@ -138,11 +143,11 @@ const canonicalUrl = 'https://elpennon.com';
         document.querySelectorAll('.lang-btn').forEach((btn) => {
           const btnLang = btn.id.replace('lang-', '');
           if (btnLang === lang) {
-            btn.classList.add('bg-amber-700', 'text-white');
-            btn.classList.remove('text-amber-200');
+            btn.classList.add('text-brand-gold');
+            btn.classList.remove('text-brand-ivory-muted');
           } else {
-            btn.classList.remove('bg-amber-700', 'text-white');
-            btn.classList.add('text-amber-200');
+            btn.classList.remove('text-brand-gold');
+            btn.classList.add('text-brand-ivory-muted');
           }
         });
       }
