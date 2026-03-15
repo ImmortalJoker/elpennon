@@ -1,0 +1,165 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalUrl = 'https://elpennon.com';
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="marco a medida, marcos aluminio, enmarcaciones Tenerife, marco 40x40, marco 50x50, marco personalizado, Bilderrahmen, custom frames, Puerto de la Cruz" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="es" href={canonicalUrl} />
+    <link rel="alternate" hreflang="de" href={`${canonicalUrl}?lang=de`} />
+    <link rel="alternate" hreflang="en" href={`${canonicalUrl}?lang=en`} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Enmarcaciones El Peñón" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="de_DE" />
+    <meta property="og:locale:alternate" content="en_GB" />
+
+    <!-- Schema.org LocalBusiness -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Enmarcaciones El Peñón",
+      "telephone": "+34647082690",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Transversal C/ Mequínez, 138",
+        "addressLocality": "Puerto de la Cruz",
+        "addressRegion": "Tenerife",
+        "addressCountry": "ES"
+      },
+      "priceRange": "€€",
+      "url": canonicalUrl
+    })} />
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 font-sans">
+    <slot />
+
+    <!-- i18n client-side script -->
+    <script>
+      import i18next from 'i18next';
+      import LanguageDetector from 'i18next-browser-languagedetector';
+      import { translations } from '../i18n/translations';
+      import type { Lang } from '../i18n/translations';
+
+      const SUPPORTED_LANGS: Lang[] = ['es', 'de', 'en'];
+
+      function initI18n() {
+        i18next
+          .use(LanguageDetector)
+          .init({
+            resources: {
+              es: { translation: translations.es },
+              de: { translation: translations.de },
+              en: { translation: translations.en },
+            },
+            fallbackLng: 'es',
+            supportedLngs: SUPPORTED_LANGS,
+            detection: {
+              order: ['querystring', 'localStorage', 'navigator'],
+              lookupQuerystring: 'lang',
+              caches: ['localStorage'],
+            },
+            interpolation: { escapeValue: false },
+          })
+          .then(() => {
+            applyTranslations();
+            updateLangButtons();
+            setupLangButtons();
+          });
+      }
+
+      function applyTranslations() {
+        const lang = i18next.language as Lang;
+        const resolvedLang = SUPPORTED_LANGS.includes(lang) ? lang : 'es';
+
+        document.documentElement.lang = resolvedLang;
+
+        // Update page title
+        document.title = i18next.t('title');
+
+        // Update meta description
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', i18next.t('description'));
+
+        // Translate all elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const key = el.getAttribute('data-i18n')!;
+          const optStr = el.getAttribute('data-i18n-options');
+          const opts = optStr ? JSON.parse(optStr) : undefined;
+          el.textContent = i18next.t(key, opts) as string;
+        });
+
+        // Update frame select options
+        const frameSelect = document.getElementById('calc-frame') as HTMLSelectElement | null;
+        if (frameSelect) {
+          Array.from(frameSelect.options).forEach((opt) => {
+            const label = opt.getAttribute(`data-label-${resolvedLang}`) || opt.textContent;
+            const price = opt.dataset.price;
+            opt.textContent = `${label} — €${parseFloat(price!).toFixed(2)}/m`;
+          });
+        }
+
+        // Update glass select options
+        const glassSelect = document.getElementById('calc-glass-type') as HTMLSelectElement | null;
+        if (glassSelect) {
+          Array.from(glassSelect.options).forEach((opt) => {
+            const label = opt.getAttribute(`data-label-${resolvedLang}`) || opt.textContent;
+            const price = opt.dataset.price;
+            opt.textContent = `${label} — €${parseFloat(price!).toFixed(2)}/m²`;
+          });
+        }
+      }
+
+      function updateLangButtons() {
+        const lang = i18next.language;
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+          const btnLang = btn.id.replace('lang-', '');
+          if (btnLang === lang) {
+            btn.classList.add('bg-amber-700', 'text-white');
+            btn.classList.remove('text-amber-200');
+          } else {
+            btn.classList.remove('bg-amber-700', 'text-white');
+            btn.classList.add('text-amber-200');
+          }
+        });
+      }
+
+      function setupLangButtons() {
+        SUPPORTED_LANGS.forEach((lang) => {
+          const btn = document.getElementById(`lang-${lang}`);
+          btn?.addEventListener('click', () => {
+            i18next.changeLanguage(lang).then(() => {
+              applyTranslations();
+              updateLangButtons();
+            });
+          });
+        });
+      }
+
+      initI18n();
+    </script>
+  </body>
+</html>

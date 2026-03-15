@@ -1,0 +1,16 @@
+---
+---
+<section id="gallery" class="py-16 px-4 bg-gray-50">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-amber-900" data-i18n="galleryTitle">Galería</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 6 }).map(() => (
+        <div
+          class="aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300"
+        >
+          <p class="text-gray-500 text-lg" data-i18n="photoComingSoon">Foto próximamente</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
