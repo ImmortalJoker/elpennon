@@ -1,5 +1,6 @@
 ---
 import { FRAME_TYPES, GLASS_TYPES, MIN_SIDE_CM, MAX_SIDE_CM } from '../config/prices';
+import ARVisualizer from './ARVisualizer.astro';
 ---
 <section id="calculator" class="py-24 md:py-32 px-4 bg-brand-dark">
   <div class="max-w-2xl mx-auto">
@@ -98,6 +99,9 @@ import { FRAME_TYPES, GLASS_TYPES, MIN_SIDE_CM, MAX_SIDE_CM } from '../config/pr
         </div>
       </div>
 
+      <!-- AR Visualizer -->
+      <ARVisualizer />
+
       <!-- WhatsApp button -->
       <a
         id="whatsapp-btn"
@@ -137,6 +141,10 @@ import { FRAME_TYPES, GLASS_TYPES, MIN_SIDE_CM, MAX_SIDE_CM } from '../config/pr
 
     const width = parseFloat((document.getElementById('calc-width') as HTMLInputElement).value) || 0;
     const height = parseFloat((document.getElementById('calc-height') as HTMLInputElement).value) || 0;
+
+    // Expose dimensions for AR Visualizer
+    (window as any).__frameWidth = width;
+    (window as any).__frameHeight = height;
     const frameSelect = document.getElementById('calc-frame') as HTMLSelectElement;
     const glassSelect = document.getElementById('calc-glass-type') as HTMLSelectElement;
     const withGlass = glassCheck.checked;

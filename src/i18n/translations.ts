@@ -8,10 +8,17 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Marcos a medida para cada momento',
     callUs: 'Llámanos',
+    services: ['Fotos', 'Diplomas', 'Dibujos', 'Óleos', 'Espejos', 'Pósters', 'Láminas'],
 
     // Gallery
     galleryTitle: 'Galería',
     photoComingSoon: 'Foto próximamente',
+
+    // AR Visualizer
+    arButton: 'Ver en tu pared',
+    arInstruction: 'Apunta a la pared para visualizar el tamaño',
+    arCameraError: 'Cámara no disponible',
+    arClose: 'Cerrar',
 
     // Calculator
     calculatorTitle: 'Calculadora de precios',
@@ -47,9 +54,15 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Bilderrahmen nach Maß für jeden Moment',
     callUs: 'Rufen Sie uns an',
+    services: ['Fotos', 'Diplome', 'Zeichnungen', 'Gemälde', 'Spiegel', 'Poster', 'Drucke'],
 
     galleryTitle: 'Galerie',
     photoComingSoon: 'Foto kommt bald',
+
+    arButton: 'An deiner Wand',
+    arInstruction: 'Richte die Kamera auf die Wand, um die Größe zu sehen',
+    arCameraError: 'Kamera nicht verfügbar',
+    arClose: 'Schließen',
 
     calculatorTitle: 'Preisrechner',
     widthLabel: 'Breite (cm)',
@@ -81,9 +94,15 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Custom frames for every moment',
     callUs: 'Call us',
+    services: ['Photos', 'Diplomas', 'Drawings', 'Paintings', 'Mirrors', 'Posters', 'Prints'],
 
     galleryTitle: 'Gallery',
     photoComingSoon: 'Photo coming soon',
+
+    arButton: 'See on your wall',
+    arInstruction: 'Point at the wall to visualise the size',
+    arCameraError: 'Camera not available',
+    arClose: 'Close',
 
     calculatorTitle: 'Price calculator',
     widthLabel: 'Width (cm)',
