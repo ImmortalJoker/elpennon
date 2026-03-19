@@ -14,12 +14,20 @@
 
   <div class="relative z-10 mx-auto w-full max-w-[22rem] text-center sm:max-w-3xl">
     <!-- Logo -->
-    <img
-      src="/logo.png"
-      alt="Enmarcaciones El Peñón"
-      class="mx-auto mb-6 h-20 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] sm:h-24 md:h-28"
-      fetchpriority="high"
-    />
+    <picture class="mx-auto mb-6 block">
+      <source
+        srcset="/optimized/logo.webp 1x, /optimized/logo@2x.webp 2x"
+        type="image/webp"
+      />
+      <img
+        src="/optimized/logo.png"
+        alt="Enmarcaciones El Peñón"
+        width="400"
+        height="229"
+        class="mx-auto h-20 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] sm:h-24 md:h-28"
+        fetchpriority="high"
+      />
+    </picture>
 
     <h1 class="mb-6 font-heading text-[clamp(2.35rem,11.5vw,4.5rem)] leading-[0.9] font-bold tracking-[-0.02em] text-brand-ivory sm:text-6xl sm:tracking-[0.04em] md:text-7xl lg:text-8xl" data-i18n="shopName">
       Enmarcaciones El Peñón
