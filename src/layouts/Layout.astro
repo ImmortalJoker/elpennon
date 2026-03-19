@@ -7,9 +7,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const canonicalUrl = 'https://elpennon.com';
-// Use Vercel URL for OG assets until custom domain is live
-const ogBaseUrl = 'https://elpennon.vercel.app';
+const canonicalUrl = 'https://elpennon.vercel.app';
+const ogBaseUrl = canonicalUrl;
 ---
 <!doctype html>
 <html lang="es">
