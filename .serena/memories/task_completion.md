@@ -1,0 +1,1 @@
+When finishing a change in this repo, run `npm run build` at minimum. For interactive UI changes, also run the Astro dev server and visually verify the affected section in the browser, including responsive/mobile behavior when relevant. There is currently no dedicated lint or test script in package.json, so build + targeted manual verification are the main checks.

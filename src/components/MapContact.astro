@@ -1,6 +1,4 @@
 ---
-import businessCardEs from '../assets/raw/business-card-es.jpg';
-import businessCardDe from '../assets/raw/business-card-de.jpg';
 ---
 <section id="contact" class="py-24 md:py-32 px-4 bg-brand-dark-alt">
   <div class="max-w-5xl mx-auto">
@@ -8,24 +6,20 @@ import businessCardDe from '../assets/raw/business-card-de.jpg';
     <div class="w-16 h-px bg-brand-gold mx-auto mb-16"></div>
 
     <div class="grid md:grid-cols-2 gap-12 items-center">
-      <!-- Business card images stacked -->
-      <div class="space-y-6">
-        <div class="rounded-lg overflow-hidden border border-brand-gold/20">
+      <div>
+        <a
+          href="https://maps.google.com/?q=Enmarcaciones+El+Peñon+Puerto+de+la+Cruz+Tenerife"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group block overflow-hidden rounded-[2rem] border border-brand-gold/20 bg-brand-dark shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        >
           <img
-            src={businessCardEs.src}
-            alt="Tarjeta de visita Enmarcaciones El Peñón (español)"
-            class="w-full h-auto object-cover"
-            loading="lazy"
+            src="/optimized/map.jpg"
+            alt="Mapa ilustrado para encontrar Enmarcaciones El Peñón en Puerto de la Cruz"
+            class="w-full h-auto object-cover transition duration-500 group-hover:scale-[1.02]"
+            loading="eager"
           />
-        </div>
-        <div class="rounded-lg overflow-hidden border border-brand-gold/20">
-          <img
-            src={businessCardDe.src}
-            alt="Visitenkarte Enmarcaciones El Peñón (deutsch)"
-            class="w-full h-auto object-cover"
-            loading="lazy"
-          />
-        </div>
+        </a>
       </div>
 
       <!-- Contact info -->

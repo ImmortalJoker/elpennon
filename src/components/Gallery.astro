@@ -1,38 +1,53 @@
 ---
-const CARD_COUNT = 6;
+const GALLERY_IMAGES = Array.from({ length: 10 }, (_, index) => ({
+  id: index + 1,
+  src: `/optimized/gallery/${index + 1}.jpg`,
+  alt: `Trabajo de enmarcación ${index + 1} de Enmarcaciones El Peñón`,
+}));
+const LOOP_CLONES = 3;
+const LOOPED_IMAGES = [
+  ...GALLERY_IMAGES.slice(-LOOP_CLONES),
+  ...GALLERY_IMAGES,
+  ...GALLERY_IMAGES.slice(0, LOOP_CLONES),
+];
 ---
 <section id="gallery" class="py-24 md:py-32 px-4 bg-brand-dark-alt">
   <div class="max-w-6xl mx-auto">
     <h2 class="font-heading text-3xl md:text-4xl font-bold text-center mb-4 text-brand-ivory" data-i18n="galleryTitle">Galería</h2>
     <div class="w-16 h-px bg-brand-gold mx-auto mb-16"></div>
 
-    <div class="relative">
+    <div id="gallery-carousel" class="relative">
       <!-- Prev button -->
-      <button id="gallery-prev" aria-label="Previous" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-6 z-10 w-10 h-10 flex items-center justify-center rounded-full border border-brand-gold/60 bg-brand-dark/90 text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-all cursor-pointer">
+      <button id="gallery-prev" type="button" aria-label="Previous" class="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/60 bg-brand-dark/90 text-brand-gold transition-all hover:bg-brand-gold hover:text-brand-dark md:left-0 md:-translate-x-6 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
       <!-- Carousel track -->
-      <div id="gallery-track" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-2 pb-4" style="scrollbar-width: none; -ms-overflow-style: none;">
-        {Array.from({ length: CARD_COUNT }).map((_, i) => (
-          <div class="gallery-card flex-shrink-0 w-[calc(100%-1rem)] sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] snap-start aspect-[4/3] rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-brand-gold/40 bg-brand-dark/50" data-index={i}>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-brand-gold/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="1" />
-              <rect x="5.5" y="5.5" width="13" height="13" rx="0.5" />
-              <line x1="3" y1="3" x2="5.5" y2="5.5" />
-              <line x1="21" y1="3" x2="18.5" y2="5.5" />
-              <line x1="3" y1="21" x2="5.5" y2="18.5" />
-              <line x1="21" y1="21" x2="18.5" y2="18.5" />
-            </svg>
-            <p class="text-brand-ivory-muted text-sm italic font-heading" data-i18n="photoComingSoon">Foto próximamente</p>
-          </div>
-        ))}
+      <div id="gallery-viewport" class="overflow-hidden pb-4 sm:px-2">
+        <div id="gallery-track" class="flex transition-transform duration-500 ease-out will-change-transform">
+          {LOOPED_IMAGES.map((image, renderIndex) => (
+            <button
+              type="button"
+              class="gallery-card group relative overflow-hidden rounded-[2rem] border border-brand-gold/20 bg-brand-dark shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+              data-gallery-slide
+              data-real-index={(renderIndex - LOOP_CLONES + GALLERY_IMAGES.length) % GALLERY_IMAGES.length}
+              aria-label={`Open gallery image ${((renderIndex - LOOP_CLONES + GALLERY_IMAGES.length) % GALLERY_IMAGES.length) + 1}`}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                loading={renderIndex >= LOOP_CLONES && renderIndex < LOOP_CLONES + 3 ? 'eager' : 'lazy'}
+              />
+            </button>
+          ))}
+        </div>
       </div>
 
       <!-- Next button -->
-      <button id="gallery-next" aria-label="Next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-6 z-10 w-10 h-10 flex items-center justify-center rounded-full border border-brand-gold/60 bg-brand-dark/90 text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-all cursor-pointer">
+      <button id="gallery-next" type="button" aria-label="Next" class="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/60 bg-brand-dark/90 text-brand-gold transition-all hover:bg-brand-gold hover:text-brand-dark md:right-0 md:translate-x-6 cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
@@ -41,70 +56,281 @@ const CARD_COUNT = 6;
 
     <!-- Dots indicator -->
     <div id="gallery-dots" class="flex justify-center gap-2 mt-6">
-      {Array.from({ length: CARD_COUNT }).map((_, i) => (
-        <button class="gallery-dot w-2 h-2 rounded-full bg-brand-gold/30 transition-all cursor-pointer border-none p-0" data-dot={i} aria-label={`Go to slide ${i + 1}`}></button>
+      {GALLERY_IMAGES.map((image, index) => (
+        <button
+          type="button"
+          class="gallery-dot h-2 rounded-full bg-brand-gold/30 transition-all cursor-pointer border-none p-0"
+          data-dot={index}
+          aria-label={`Go to slide ${image.id}`}
+        ></button>
       ))}
     </div>
   </div>
 </section>
 
+<div id="gallery-lightbox" class="fixed inset-0 z-50 hidden bg-brand-dark/95 px-4 py-6 md:px-8" role="dialog" aria-modal="true" aria-label="Gallery viewer">
+  <div class="flex h-full items-center justify-center">
+    <button id="gallery-lightbox-close" type="button" aria-label="Close gallery viewer" class="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-gold/40 bg-brand-dark/70 text-brand-ivory transition hover:border-brand-gold hover:text-brand-gold md:right-8 md:top-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <button id="gallery-lightbox-prev" type="button" aria-label="Show previous image" class="absolute left-4 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/40 bg-brand-dark/70 text-brand-gold transition hover:border-brand-gold hover:bg-brand-gold hover:text-brand-dark md:left-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <div class="w-full max-w-6xl">
+      <div class="overflow-hidden rounded-[2rem] border border-brand-gold/20 bg-brand-dark shadow-[0_30px_90px_rgba(0,0,0,0.35)]">
+        <img id="gallery-lightbox-image" src={GALLERY_IMAGES[0].src} alt={GALLERY_IMAGES[0].alt} class="max-h-[78vh] w-full object-contain" />
+      </div>
+      <div class="mt-5 flex items-center justify-center gap-3 text-sm font-medium tracking-[0.18em] text-brand-ivory-muted">
+        <span id="gallery-lightbox-count">01 / {String(GALLERY_IMAGES.length).padStart(2, '0')}</span>
+      </div>
+    </div>
+
+    <button id="gallery-lightbox-next" type="button" aria-label="Show next image" class="absolute right-4 top-1/2 z-10 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/40 bg-brand-dark/70 text-brand-gold transition hover:border-brand-gold hover:bg-brand-gold hover:text-brand-dark md:right-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>
+
 <style>
-  #gallery-track::-webkit-scrollbar {
-    display: none;
+  #gallery-carousel {
+    --gallery-gap: 1rem;
+    --gallery-visible: 1;
+  }
+
+  #gallery-track {
+    gap: var(--gallery-gap);
+  }
+
+  .gallery-card {
+    flex: 0 0 calc((100% - (var(--gallery-visible) - 1) * var(--gallery-gap)) / var(--gallery-visible));
+    aspect-ratio: 4 / 3;
+  }
+
+  .gallery-dot {
+    width: 0.5rem;
+  }
+
+  .gallery-dot.is-active {
+    width: 2.5rem;
+  }
+
+  #gallery-lightbox.is-open {
+    display: block;
+  }
+
+  @media (min-width: 640px) {
+    #gallery-carousel {
+      --gallery-gap: 1.5rem;
+      --gallery-visible: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    #gallery-carousel {
+      --gallery-visible: 3;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-card img {
+      transition: none !important;
+    }
   }
 </style>
 
-<script>
-  const track = document.getElementById('gallery-track')!;
-  const prevBtn = document.getElementById('gallery-prev')!;
-  const nextBtn = document.getElementById('gallery-next')!;
-  const dots = document.querySelectorAll('.gallery-dot');
-  const cards = document.querySelectorAll('.gallery-card');
+<script define:vars={{ galleryImages: GALLERY_IMAGES, cloneCount: LOOP_CLONES }}>
+  const track = document.getElementById('gallery-track');
+  const viewport = document.getElementById('gallery-viewport');
+  const prevBtn = document.getElementById('gallery-prev');
+  const nextBtn = document.getElementById('gallery-next');
+  const slideButtons = Array.from(document.querySelectorAll('[data-gallery-slide]'));
+  const dots = Array.from(document.querySelectorAll('.gallery-dot'));
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxImage = document.getElementById('gallery-lightbox-image');
+  const lightboxCount = document.getElementById('gallery-lightbox-count');
+  const lightboxPrev = document.getElementById('gallery-lightbox-prev');
+  const lightboxNext = document.getElementById('gallery-lightbox-next');
+  const lightboxClose = document.getElementById('gallery-lightbox-close');
 
-  function getVisibleCount() {
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 640) return 2;
-    return 1;
-  }
+  if (
+    track &&
+    viewport &&
+    prevBtn &&
+    nextBtn &&
+    lightbox &&
+    lightboxImage instanceof HTMLImageElement &&
+    lightboxCount &&
+    lightboxPrev &&
+    lightboxNext &&
+    lightboxClose
+  ) {
+    let currentIndex = cloneCount;
+    let isTransitioning = false;
+    let lightboxIndex = 0;
+    let touchStartX = 0;
 
-  function getCardWidth() {
-    const card = cards[0] as HTMLElement;
-    if (!card) return 0;
-    return card.offsetWidth + 24; // 24px = gap-6
-  }
+    function getRealIndex(renderedIndex) {
+      return ((renderedIndex - cloneCount) % galleryImages.length + galleryImages.length) % galleryImages.length;
+    }
 
-  function getCurrentIndex() {
-    const cardW = getCardWidth();
-    if (cardW === 0) return 0;
-    return Math.round(track.scrollLeft / cardW);
-  }
+    function getSlideStep() {
+      const firstSlide = slideButtons[0];
+      if (!(firstSlide instanceof HTMLElement)) return 0;
+      const gap = Number.parseFloat(window.getComputedStyle(track).gap || '0');
+      return firstSlide.getBoundingClientRect().width + gap;
+    }
 
-  function scrollToIndex(idx: number) {
-    const maxIdx = cards.length - getVisibleCount();
-    const clamped = Math.max(0, Math.min(idx, maxIdx));
-    track.scrollTo({ left: clamped * getCardWidth(), behavior: 'smooth' });
-  }
+    function setTrackPosition(animate) {
+      const step = getSlideStep();
+      track.style.transition = animate ? 'transform 500ms ease' : 'none';
+      track.style.transform = `translate3d(-${currentIndex * step}px, 0, 0)`;
 
-  function updateDots() {
-    const idx = getCurrentIndex();
-    dots.forEach((dot, i) => {
-      if (i === idx) {
-        dot.classList.add('bg-brand-gold');
-        dot.classList.remove('bg-brand-gold/30');
-      } else {
-        dot.classList.remove('bg-brand-gold');
-        dot.classList.add('bg-brand-gold/30');
+      if (!animate) {
+        requestAnimationFrame(() => {
+          track.style.transition = 'transform 500ms ease';
+        });
+      }
+    }
+
+    function updateDots() {
+      const activeIndex = getRealIndex(currentIndex);
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === activeIndex);
+        dot.classList.toggle('bg-brand-gold', index === activeIndex);
+        dot.classList.toggle('bg-brand-gold/30', index !== activeIndex);
+      });
+    }
+
+    function syncToRealIndex(realIndex, animate = true) {
+      isTransitioning = animate;
+      currentIndex = realIndex + cloneCount;
+      setTrackPosition(animate);
+      updateDots();
+
+      if (!animate) {
+        isTransitioning = false;
+      }
+    }
+
+    function move(delta) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      currentIndex += delta;
+      setTrackPosition(true);
+      updateDots();
+    }
+
+    function renderLightbox() {
+      const image = galleryImages[lightboxIndex];
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.alt;
+      lightboxCount.textContent = `${String(lightboxIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+      syncToRealIndex(lightboxIndex, false);
+    }
+
+    function openLightbox(index) {
+      lightboxIndex = index;
+      renderLightbox();
+      lightbox.hidden = false;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    function shiftLightbox(delta) {
+      lightboxIndex = (lightboxIndex + delta + galleryImages.length) % galleryImages.length;
+      renderLightbox();
+    }
+
+    prevBtn.addEventListener('click', () => move(-1));
+    nextBtn.addEventListener('click', () => move(1));
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        if (isTransitioning) return;
+        syncToRealIndex(index);
+      });
+    });
+
+    slideButtons.forEach((slide) => {
+      slide.addEventListener('click', () => {
+        const realIndex = Number.parseInt(slide.getAttribute('data-real-index') || '0', 10);
+        openLightbox(realIndex);
+      });
+    });
+
+    track.addEventListener('transitionend', () => {
+      if (currentIndex >= galleryImages.length + cloneCount) {
+        currentIndex = cloneCount;
+        setTrackPosition(false);
+      } else if (currentIndex < cloneCount) {
+        currentIndex = galleryImages.length + currentIndex;
+        setTrackPosition(false);
+      }
+
+      isTransitioning = false;
+      updateDots();
+    });
+
+    viewport.addEventListener(
+      'touchstart',
+      (event) => {
+        touchStartX = event.changedTouches[0]?.clientX ?? 0;
+      },
+      { passive: true },
+    );
+
+    viewport.addEventListener(
+      'touchend',
+      (event) => {
+        const touchEndX = event.changedTouches[0]?.clientX ?? 0;
+        const delta = touchEndX - touchStartX;
+
+        if (Math.abs(delta) < 50) return;
+        move(delta < 0 ? 1 : -1);
+      },
+      { passive: true },
+    );
+
+    lightboxPrev.addEventListener('click', () => shiftLightbox(-1));
+    lightboxNext.addEventListener('click', () => shiftLightbox(1));
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
       }
     });
+
+    window.addEventListener('resize', () => {
+      syncToRealIndex(getRealIndex(currentIndex), false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!lightbox.classList.contains('is-open')) return;
+
+      if (event.key === 'Escape') {
+        closeLightbox();
+      } else if (event.key === 'ArrowRight') {
+        shiftLightbox(1);
+      } else if (event.key === 'ArrowLeft') {
+        shiftLightbox(-1);
+      }
+    });
+
+    syncToRealIndex(0, false);
   }
-
-  prevBtn.addEventListener('click', () => scrollToIndex(getCurrentIndex() - 1));
-  nextBtn.addEventListener('click', () => scrollToIndex(getCurrentIndex() + 1));
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => scrollToIndex(i));
-  });
-
-  track.addEventListener('scroll', updateDots);
-  updateDots();
 </script>
