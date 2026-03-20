@@ -8,6 +8,7 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Marcos a medida para cada momento',
     callUs: 'Llámanos',
+    callUsAriaLabel: 'Llámanos: 647 02 02 69',
     services: ['Fotos', 'Diplomas', 'Dibujos', 'Óleos', 'Espejos', 'Pósters', 'Láminas'],
 
     // Gallery
@@ -54,6 +55,7 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Bilderrahmen nach Maß für jeden Moment',
     callUs: 'Rufen Sie uns an',
+    callUsAriaLabel: 'Rufen Sie uns an: 647 02 02 69',
     services: ['Fotos', 'Diplome', 'Zeichnungen', 'Gemälde', 'Spiegel', 'Poster', 'Drucke'],
 
     galleryTitle: 'Galerie',
@@ -94,6 +96,7 @@ export const translations = {
     shopName: 'Enmarcaciones El Peñón',
     tagline: 'Custom frames for every moment',
     callUs: 'Call us',
+    callUsAriaLabel: 'Call us: 647 02 02 69',
     services: ['Photos', 'Diplomas', 'Drawings', 'Paintings', 'Mirrors', 'Posters', 'Prints'],
 
     galleryTitle: 'Gallery',
