@@ -137,6 +137,12 @@ const ogBaseUrl = canonicalUrl;
           el.textContent = i18next.t(key, opts) as string;
         });
 
+        // Translate aria-label attributes from data-i18n-aria-label
+        document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+          const key = el.getAttribute('data-i18n-aria-label')!;
+          el.setAttribute('aria-label', i18next.t(key) as string);
+        });
+
         // Update frame select options
         const frameSelect = document.getElementById('calc-frame') as HTMLSelectElement | null;
         if (frameSelect) {
