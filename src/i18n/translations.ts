@@ -130,6 +130,47 @@ export const translations = {
 
     langLabel: 'Language',
   },
+  uk: {
+    title: 'Рамки на замовлення | Enmarcaciones El Peñón | Пуерто-де-ла-Крус',
+    description: 'Рамки на замовлення, алюмінієві рамки, обрамлення на Тенерифе. Персоналізовані рамки 40x40, 50x50 та більше. Enmarcaciones El Peñón у Пуерто-де-ла-Крус.',
+
+    shopName: 'Enmarcaciones El Peñón',
+    tagline: 'Рамки на замовлення для кожного моменту',
+    callUs: 'Зателефонуйте нам',
+    callUsAriaLabel: 'Зателефонуйте нам: 647 02 02 69',
+    services: ['Фото', 'Дипломи', 'Малюнки', 'Картини', 'Дзеркала', 'Постери', 'Репродукції'],
+
+    galleryTitle: 'Галерея',
+    photoComingSoon: 'Фото незабаром',
+
+    arButton: 'Побачити на вашій стіні',
+    arInstruction: 'Направте камеру на стіну, щоб побачити розмір',
+    arCameraError: 'Камера недоступна',
+    arClose: 'Закрити',
+
+    calculatorTitle: 'Калькулятор цін',
+    widthLabel: 'Ширина (см)',
+    heightLabel: 'Висота (см)',
+    frameTypeLabel: 'Тип рамки',
+    withGlassLabel: 'Зі склом?',
+    glassTypeLabel: 'Тип скла',
+    withBackingLabel: 'З картонною задньою стінкою?',
+    calculateButton: 'Розрахувати',
+    frameCostLabel: 'Вартість рамки',
+    glassCostLabel: 'Вартість скла',
+    totalLabel: 'Орієнтовна вартість',
+    orderWhatsApp: 'Замовити через WhatsApp',
+    whatsappMessage: 'Привіт! Хочу замовити рамку: {width}x{height}см, {frameLabel}, {glassLabel}. Орієнтовна ціна: €{total}',
+    noGlass: 'Без скла',
+
+    mapTitle: 'Як нас знайти',
+    getDirections: 'Прокласти маршрут',
+    address: 'Transversal C/ Mequínez, 138, Пуерто-де-ла-Крус, Тенерифе',
+
+    footer: '© {year} Enmarcaciones El Peñón, S.L. Всі права захищені.',
+
+    langLabel: 'Мова',
+  },
 } as const;
 
 export type Lang = keyof typeof translations;
