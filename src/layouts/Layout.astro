@@ -10,6 +10,7 @@ interface Props {
 const { title, description } = Astro.props;
 const canonicalUrl = 'https://elpennon.vercel.app';
 const ogBaseUrl = canonicalUrl;
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 ---
 <!doctype html>
 <html lang="es">
@@ -79,6 +80,14 @@ const ogBaseUrl = canonicalUrl;
     })} />
 
     <meta name="generator" content={Astro.generator} />
+
+    {/* Google Analytics 4 — production only */}
+    {import.meta.env.PROD && gaId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`} />
+      </>
+    )}
   </head>
   <body class="min-h-screen overflow-x-hidden bg-brand-dark text-brand-ivory font-body">
     <UkraineBanner />
